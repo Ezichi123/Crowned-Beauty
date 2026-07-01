@@ -1,0 +1,32 @@
+# ── Environment & secrets ──
+.env
+.env.local
+.env.production
+.env.*.local
+
+# ── Dependencies ──
+node_modules/
+
+# ── Logs ──
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# ── OS files ──
+.DS_Store
+Thumbs.db
+
+# ── Editor/IDE ──
+.vscode/
+.idea/
+*.swp
+
+# ── Build artifacts (if you ever add a bundler) ──
+dist/
+build/
+
+# ── Uploaded/temp files (if any get written locally during dev) ──
+uploads/
+tmp/

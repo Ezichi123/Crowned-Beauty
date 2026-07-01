@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Your Deposit — Crowned Beauty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+    <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+</head>
+<body>
+
+<section id="deposit-page" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem">
+  <div style="max-width:480px;width:100%;text-align:center">
+    <p class="hero-crown" style="font-size:2.2rem;margin-bottom:.5rem">♛</p>
+    <h1 class="section-title" style="margin-bottom:.2rem">Almost There!</h1>
+    <p class="section-script">Finish booking, then secure your spot</p>
+    <div class="ornament-line" style="max-width:200px"><span class="ornament">✦</span></div>
+
+    <div id="depositContent" style="margin-top:2rem">
+      <p style="color:rgba(245,237,216,.6);font-style:italic">Loading your booking details…</p>
+    </div>
+
+    <p style="margin-top:2.5rem"><a href="/" style="color:var(--gold);font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em">← BACK TO CROWNED BEAUTY</a></p>
+  </div>
+</section>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script>
+async function init() {
+  const el = document.getElementById('depositContent');
+  const raw = localStorage.getItem('pendingBooking');
+
+  const res = await apiGet('/settings/deposit-settings');
+  const settings = res || { depositPercent: 25, cashapp: {} };
+
+  if (!raw) {
+    el.innerHTML = `
+      <p style="color:rgba(245,237,216,.7);line-height:1.8;margin-bottom:1.5rem">
+        Please send your deposit via Cash App to secure your appointment.
+      </p>
+      <div class="deposit-cashtag-box">${settings.cashapp?.ezichi || 'Contact us for payment info'}</div>
+    `;
+    return;
+  }
+
+  const b = JSON.parse(raw);
+  const tag = settings.cashapp?.[b.stylist] || 'Contact us for payment info';
+  const stylistName = b.stylist === 'ezichi' ? 'Ezichi' : 'Alexia';
+
+  el.innerHTML = `
+    <p style="font-size:.8rem;color:rgba(245,237,216,.6);margin-bottom:1rem;line-height:1.7">
+      Complete your booking below, then send your deposit to lock in your appointment.
+    </p>
+    ${b.calcomUrl ? `
+      <a href="${b.calcomUrl}" target="_blank" rel="noopener" class="hero-cta" style="display:inline-block;margin-bottom:2rem">
+        COMPLETE YOUR BOOKING HERE →
+      </a>
+    ` : ''}
+    <div class="deposit-summary-card">
+      <p class="deposit-service-name">${b.style}</p>
+      ${b.addons && b.addons.length ? `<p class="deposit-addons-list">+ ${b.addons.join(', ')}</p>` : ''}
+      <p class="deposit-total-line">Service Total: $${b.total}</p>
+      <div class="deposit-amount-highlight">
+        <span>Deposit Due (${b.depositPercent}%)</span>
+        <strong>$${b.deposit}</strong>
+      </div>
+    </div>
+
+    <p style="margin:1.5rem 0 .75rem;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold)">
+      SEND YOUR DEPOSIT TO ${stylistName.toUpperCase()} VIA CASH APP
+    </p>
+    <div class="deposit-cashtag-box">${tag}</div>
+
+    <p style="margin-top:1.5rem;font-size:.78rem;color:rgba(245,237,216,.55);line-height:1.8">
+      Please include your <strong style="color:var(--gold-light)">name and appointment date</strong> in the payment note.
+    </p>
+    <p style="margin-top:1rem;font-size:.72rem;color:#e0a35c;font-style:italic;line-height:1.7">
+      ⚠ This deposit is <strong>non-refundable</strong> and secures your appointment slot. Your booking may be released if the deposit isn't received within 24 hours.
+    </p>
+  `;
+
+  localStorage.removeItem('pendingBooking');
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crowned Beauty</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+  <link rel="shortcut icon" href="assets/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">CROWNED BEAUTY</a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Stylists</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#raves">Raves</a></li>
+    <li><a href="#policy">Policy</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-book-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">BOOK NOW</button>
+  <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="document.getElementById('mobileMenu').classList.remove('open')">Our Stylists</a>
+  <a href="#services" onclick="document.getElementById('mobileMenu').classList.remove('open')">Services & Pricing</a>
+  <a href="#booking" onclick="document.getElementById('mobileMenu').classList.remove('open')">Book Appointment</a>
+  <a href="#raves" onclick="document.getElementById('mobileMenu').classList.remove('open')">Client Raves</a>
+  <a href="#policy" onclick="document.getElementById('mobileMenu').classList.remove('open')">Policy</a>
+  <a href="#contact" onclick="document.getElementById('mobileMenu').classList.remove('open')">Contact</a>
+</div>
+
+<section id="hero">
+  <div class="hero-bg-letter">C</div>
+  <div class="hero-crown">♛</div>
+  <p class="hero-subtitle">Welcome to</p>
+  <h1 class="hero-title">CROWNED</h1>
+  <p class="hero-script">Beauty</p>
+  <div class="ornament-line" style="max-width:300px"><span class="ornament">✦</span></div>
+  <p class="hero-tagline">BRAIDS · EXTENSIONS · WIGS · MOBILE SERVICES</p>
+  <a href="#booking" class="hero-cta">BOOK YOUR APPOINTMENT</a>
+</section>
+
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label">Meet the Artists</p>
+    <h2 class="section-title">OUR STYLISTS</h2>
+    <p class="section-script">Crafted with care</p>
+    <div class="ornament-line" style="max-width:250px"><span class="ornament">✦</span></div>
+    <div class="stylists-grid">
+      <div class="stylist-card">
+        <div class="stylist-avatar">E<span class="avatar-note">Photo coming soon</span></div>
+        <div style="margin-top:2rem">
+          <h3 class="stylist-name">EZICHI</h3>
+          <p class="stylist-title">Master Braiding Artist</p>
+          <p class="stylist-bio">Specializing in traditional, goddess, and boho braids, knotless styles, fulani hairstyles,and intricate protective looks. Every installation is crafted with precision and care for your natural hair's health and beauty.</p>
+          <a href="#booking" class="stylist-book-btn">BOOK WITH EZICHI</a>
+        </div>
+      </div>
+      <div class="stylist-card">
+        <div class="stylist-avatar">A<span class="avatar-note">Photo coming soon</span></div>
+        <div style="margin-top:2rem">
+          <h3 class="stylist-name">ALEXIA</h3>
+          <p class="stylist-title">Master Braiding Artist</p>
+          <p class="stylist-bio">Expert in boho and goddess braids, wigs, and creative protective looks. Committed to bringing your vision to life while keeping your natural hair flourishing.</p>
+          <a href="#booking" class="stylist-book-btn">BOOK WITH ALEXIA</a>
+        </div>
+      </div>
+    </div>
+    <div class="location-detector">
+      <p style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--gold);margin-bottom:.75rem">NOT SURE WHO'S CLOSEST TO YOU?</p>
+      <button class="location-btn" onclick="detectLocation()">✦ USE MY LOCATION</button>
+      <p class="location-result" id="locationResult"></p>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-inner">
+    <p class="section-label">Investment in Your Crown</p>
+    <h2 class="section-title">SERVICES &</h2>
+    <p class="section-script">Pricing</p>
+    <div class="ornament-line" style="max-width:250px"><span class="ornament">✦</span></div>
+    <p class="services-intro">Prices do not include hair provided · Click a size to choose your length · All prices subject to change</p>
+
+    <div class="selection-banner" id="selectionBanner">
+      <span class="selection-banner-text" id="selectionBannerText"></span>
+      <button class="clear-selection-btn" onclick="clearSelection()">✕ CLEAR</button>
+    </div>
+
+    <div class="service-tabs"></div>
+    <div id="servicesRendered"></div>
+  </div>
+</section>
+
+<section id="addons">
+  <div class="section-inner">
+    <p class="section-label">Customize Your Look</p>
+    <h2 class="section-title">ADD-ONS</h2>
+    <p class="section-script">Optional extras</p>
+    <div class="ornament-line" style="max-width:250px"><span class="ornament">✦</span></div>
+    <p class="services-intro">Select any extras for your appointment — prices add to your service total</p>
+
+    <div class="addons-grid" id="addonsRendered"></div>
+
+    <div class="booking-summary" id="bookingSummary" style="display:none"></div>
+
+    <div id="bookNowWrap" style="display:none;text-align:center;margin-top:1.5rem">
+      <button class="hero-cta" onclick="openStylistPicker()">BOOK NOW</button>
+    </div>
+  </div>
+</section>
+
+<section id="booking">
+  <div class="section-inner">
+    <p class="section-label">Reserve Your Appointment</p>
+    <h2 class="section-title">BOOK YOUR</h2>
+    <p class="section-script">Appointment</p>
+    <div class="ornament-line" style="max-width:250px"><span class="ornament">✦</span></div>
+    <p class="booking-hint" id="bookingHint">Select your stylist to book — or pick a service above to filter</p>
+    <div class="booking-grid">
+      <div class="booking-card bc-active" id="bc-ezichi" onclick="bookWith('ezichi')">
+        <div class="booking-initial">E</div>
+        <h3 class="booking-name">EZICHI</h3>
+        <p class="booking-role">Master Braiding Artist</p>
+        <p class="booking-specialties">Knotless · Goddess · Boho · Fulani<br>Cornrows · Protective Styles · Locs · Twists · Mobile Services</p>
+        <div class="booking-buttons">
+          <button class="booking-cta-btn">VIEW AVAILABILITY →</button>
+          <button class="booking-gallery-btn" onclick="event.stopPropagation();openGallery('ezichi')">VIEW GALLERY</button>
+        </div>
+        <p class="booking-unavail-note" id="bc-ez-note" style="display:none"></p>
+      </div>
+      <div class="booking-card bc-active" id="bc-alexia" onclick="bookWith('alexia')">
+        <div class="booking-initial">A</div>
+        <h3 class="booking-name">ALEXIA</h3>
+        <p class="booking-role">Master Braiding Artist</p>
+        <p class="booking-specialties">Knotless · Wig Installations · Boho<br>Quickweaves · Mobile Services</p>
+        <div class="booking-buttons">
+          <button class="booking-cta-btn">VIEW AVAILABILITY →</button>
+          <button class="booking-gallery-btn" onclick="event.stopPropagation();openGallery('alexia')">VIEW GALLERY</button>
+        </div>
+        <p class="booking-unavail-note" id="bc-al-note" style="display:none"></p>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;font-size:.65rem;color:rgba(245,237,216,.22);font-family:'Cinzel',serif;letter-spacing:.1em"></p>
+  </div>
+</section>
+
+<section id="raves">
+  <div class="section-inner">
+    <p class="section-label">What Our Clients Say</p>
+    <h2 class="section-title">CLIENT</h2>
+    <p class="section-script">Raves</p>
+    <div class="ornament-line" style="max-width:250px"><span class="ornament">✦</span></div>
+    <div class="raves-grid">
+      <div class="rave-card"><div class="rave-stars">★★★★★</div><p class="rave-quote">"Absolutely obsessed with my knotless braids! So gentle with my hair and the install was flawless."</p><p class="rave-author">— JASMINE T.</p></div>
+      <div class="rave-card"><div class="rave-stars">★★★★★</div><p class="rave-quote">"Book her! I drove two hours and it was completely worth it. My goddess braids lasted longer than any I've ever had."</p><p class="rave-author">— MORGAN R.</p></div>
+      <div class="rave-card"><div class="rave-stars">★★★★★</div><p class="rave-quote">"The boho braids were everything I envisioned and more. So professional, so talented. Crowned Beauty is the real deal."</p><p class="rave-author">— DESTINY K.</p></div>
+      <div class="rave-card"><div class="rave-stars">★★★★★</div><p class="rave-quote">"My fulani braids were so detailed and beautiful. The mobile service was incredibly convenient. 10/10!"</p><p class="rave-author">— AISHA M.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="policy">
+  <div class="section-inner">
+    <p class="section-label">What to Know Before You Book</p>
+    <h2 class="section-title">BOOKING</h2>
+    <p class="section-script">Policy</p>
+    <div class="ornament-line" style="max-width:250px"><span class="ornament">✦</span></div>
+    <div class="policy-grid">
+      <div class="policy-card"><h4 class="policy-title">DEPOSITS</h4><p class="policy-text">A non-refundable deposit is required to secure your appointment. This goes toward your total service cost.</p></div>
+      <div class="policy-card"><h4 class="policy-title">CANCELLATIONS</h4><p class="policy-text">Please cancel at least 48 hours in advance. Late cancellations will result in forfeiture of your deposit.</p></div>
+      <div class="policy-card"><h4 class="policy-title">LATENESS</h4><p class="policy-text">A grace period of 15 minutes is allowed. After that your appointment may be cancelled and deposit forfeited.</p></div>
+      <div class="policy-card"><h4 class="policy-title">HAIR PREP</h4><p class="policy-text">Please arrive with clean, detangled, and stretched hair. An additional fee may apply for hair prep services.</p></div>
+      <div class="policy-card"><h4 class="policy-title">LOCATION</h4><p class="policy-text">Location details are sent upon booking confirmation. Mobile services available — inquire at time of booking.</p></div>
+      <div class="policy-card"><h4 class="policy-title">PAYMENT</h4><p class="policy-text">We accept Cash App, Zelle, and cash. Full balance is due at the time of service. No exceptions.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">CONTACT</h2>
+    <p class="section-script">Us</p>
+    <div class="ornament-line" style="max-width:250px"><span class="ornament">✦</span></div>
+    <div class="contact-grid">
+      <div class="contact-item"><p class="contact-label">BOOKING HOURS</p><p class="contact-value" id="cHours">By Appointment Only</p></div>
+      <div class="contact-item"><p class="contact-label">EMAIL</p><p class="contact-value" id="cEmail">crownedd.beauty@gmail.com</p></div>
+      <div class="contact-item"><p class="contact-label">INSTAGRAM</p><p class="contact-value" id="cIg">@crownedbeauty</p></div>
+      <div class="contact-item"><p class="contact-label">LOCATION</p><p class="contact-value" id="cLoc">Bowie, MD<br><em style="font-size:.7rem;color:rgba(245,237,216,.35)">Address sent on booking</em></p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Crowned Beauty</div>
+  <p class="footer-tagline">BRAIDS · EXTENSIONS · WIGS · MOBILE SERVICES</p>
+  <div class="ornament-line" style="max-width:200px"><span class="ornament">✦</span></div>
+  <p class="footer-copy">© 2025 Crowned Beauty · Ezichi & Alexia · All rights reserved</p>
+</footer>
+
+<div class="gallery-modal" id="galleryModal">
+  <div class="gallery-modal-header">
+    <div class="gallery-modal-titles">
+      <span class="gallery-modal-label" id="galModalLabel">PORTFOLIO</span>
+      <span class="gallery-modal-name" id="galModalName">EZICHI</span>
+      <span class="gallery-modal-script">Previous work</span>
+    </div>
+    <button class="gallery-modal-close" onclick="closeGallery()" title="Close">✕</button>
+  </div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="event.stopPropagation();closeLightbox()">✕</button>
+  <div class="lightbox-content" id="lightboxContent" onclick="event.stopPropagation()"></div>
+</div>
+
+<div id="admin-toggle">
+  <div class="admin-dot" onclick="document.getElementById('adminPanel').classList.toggle('open')" title="Admin">⚙</div>
+</div>
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header">
+    <span class="admin-title">ADMIN PANEL</span>
+    <button class="admin-close" onclick="document.getElementById('adminPanel').classList.remove('open')">✕</button>
+  </div>
+  <div id="adminContent">
+    <div style="padding:1rem 0">
+      <p style="font-family:'Cinzel',serif;color:var(--gold);font-size:.82rem;letter-spacing:.1em;margin-bottom:1rem">ADMIN LOGIN</p>
+      <div class="admin-field"><label class="admin-label">USERNAME</label><input class="admin-input" type="text" id="adminUser" placeholder="admin"></div>
+      <div class="admin-field"><label class="admin-label">PASSWORD</label><input class="admin-input" type="password" id="adminPass" placeholder="Password" onkeypress="if(event.key==='Enter')adminLogin()"></div>
+      <button class="admin-save-btn" onclick="adminLogin()">UNLOCK</button>
+      <p style="font-size:.62rem;color:rgba(245,237,216,.28);margin-top:.75rem;text-align:center"></p>
+    </div>
+  </div>
+</div>
+
+<!-- App config: API base URL etc -->
+<script src="js/config.js"></script>
+<!-- Service rendering, gallery, admin -->
+<script src="js/api.js"></script>
+<script src="js/services.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/booking.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/main.js"></script>
+
+<div class="stylist-picker-overlay" id="stylistPickerOverlay" onclick="closeStylistPicker()">
+  <div class="stylist-picker-modal" onclick="event.stopPropagation()">
+    <button class="lightbox-close" style="position:absolute;top:.75rem;right:.75rem" onclick="closeStylistPicker()">✕</button>
+    <p class="section-label" style="margin-top:0">Who Would You Like to Book?</p>
+    <div class="stylist-picker-options" id="stylistPickerOptions"></div>
+  </div>
+</div>
+
+</body>
+</html>
