@@ -75,7 +75,7 @@ section { padding: 5rem 2rem; }
 .stylist-card { border: .5px solid rgba(201,169,110,.3); padding: 2.5rem; text-align: center; position: relative; overflow: hidden; transition: border-color .3s; }
 .stylist-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 .stylist-card:hover { border-color: rgba(201,169,110,.7); }
-.stylist-avatar { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1.5rem; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--gold); background: rgba(201,169,110,.1); position: relative; }
+.stylist-avatar { width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 1.5rem; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--gold); background: rgba(201,169,110,.1); position: relative; }
 .avatar-note { font-size: .52rem; font-family: 'Cinzel', serif; letter-spacing: .08em; color: rgba(201,169,110,.4); position: absolute; bottom: -1.8rem; left: 50%; transform: translateX(-50%); white-space: nowrap; }
 .stylist-name { font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--gold-light); margin-bottom: .3rem; letter-spacing: .1em; }
 .stylist-title { font-family: 'Great Vibes', cursive; font-size: 1.2rem; color: var(--gold); margin-bottom: 1rem; }
@@ -320,3 +320,10 @@ footer { background: var(--dark-brown); text-align: center; padding: 3rem 2rem; 
 .deposit-amount-highlight span { font-family: 'Cinzel', serif; font-size: .68rem; letter-spacing: .1em; color: var(--gold); }
 .deposit-amount-highlight strong { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--gold-light); }
 .deposit-cashtag-box { border: 1px solid var(--gold); background: rgba(201,169,110,.08); padding: 1rem; font-family: 'Cinzel', serif; font-size: 1.2rem; letter-spacing: .06em; color: var(--gold-light); }
+
+.stylist-buttons { display: flex; flex-direction: column; gap: .6rem; align-items: center; margin-top: 1.5rem; }
+.stylist-gallery-btn { display: inline-block; border: .5px solid rgba(201,169,110,.5); color: rgba(245,237,216,.75); padding: .55rem 1.6rem; font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .14em; transition: all .3s; background: transparent; cursor: pointer; }
+.stylist-gallery-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+.stylist-avatar.has-photo { padding: 0; overflow: hidden; }
+.stylist-avatar.has-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }

@@ -149,3 +149,76 @@ function renderAdminGallery(stylist) {
   });
   prev.innerHTML = h;
 }
+
+// ──── PROFILE PHOTOS ────
+let profilePhotos = { ezichi: null, alexia: null };
+
+async function loadProfilePhotos() {
+  const data = await apiGet('/gallery/profile-photos');
+  if (data) profilePhotos = data;
+  renderStylistAvatars();
+}
+
+function renderStylistAvatars() {
+  ['ezichi', 'alexia'].forEach(stylist => {
+    const el = document.getElementById('avatar-' + stylist);
+    if (!el) return;
+    const photo = profilePhotos[stylist];
+    const letter = stylist === 'ezichi' ? 'E' : 'A';
+    if (photo && photo.src) {
+      el.innerHTML = `<img src="${photo.src}" alt="${stylist === 'ezichi' ? 'Ezichi' : 'Alexia'}">`;
+      el.classList.add('has-photo');
+    } else {
+      el.innerHTML = `${letter}<span class="avatar-note">Photo coming soon</span>`;
+      el.classList.remove('has-photo');
+    }
+  });
+}
+
+async function uploadProfilePhoto(stylist, inputEl) {
+  const file = inputEl.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    alert('Please choose an image file.');
+    inputEl.value = '';
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('photo', file);
+  formData.append('stylist', stylist);
+
+  const result = await apiUpload('/gallery/profile-photo', formData);
+  if (result && result.success) {
+    profilePhotos[stylist] = { src: result.src };
+    renderStylistAvatars();
+    renderAdminProfilePhoto(stylist);
+  } else {
+    alert('Upload failed. Please try again.');
+  }
+  inputEl.value = '';
+}
+
+async function removeProfilePhoto(stylist) {
+  if (!confirm('Remove this profile photo?')) return;
+  await apiDelete(`/gallery/profile-photo/${stylist}`);
+  profilePhotos[stylist] = null;
+  renderStylistAvatars();
+  renderAdminProfilePhoto(stylist);
+}
+
+function renderAdminProfilePhoto(stylist) {
+  const el = document.getElementById('adminProfilePhotoPrev-' + stylist);
+  if (!el) return;
+  const photo = profilePhotos[stylist];
+  if (photo && photo.src) {
+    el.innerHTML = `
+      <div class="admin-gal-item" style="width:90px;height:90px">
+        <img src="${photo.src}" alt="">
+        <button class="admin-gal-remove" onclick="removeProfilePhoto('${stylist}')" title="Remove">✕</button>
+      </div>
+    `;
+  } else {
+    el.innerHTML = '<p style="font-size:.7rem;color:rgba(245,237,216,.35);padding:.25rem 0">No photo uploaded yet</p>';
+  }
+}

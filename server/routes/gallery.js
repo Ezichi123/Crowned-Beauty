@@ -56,6 +56,87 @@ router.get('/', async (req, res) => {
   }
 });
 
+const Setting = require('../models/Setting');
+
+// GET — profile photos for both stylists (public)
+router.get('/profile-photos', async (req, res) => {
+  try {
+    const doc = await Setting.findOne({ key: 'profile-photos' });
+    res.json(doc ? doc.value : {});
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST /profile-photo — upload or replace a stylist's profile photo (admin only)
+router.post('/profile-photo', auth, upload.single('photo'), async (req, res) => {
+  try {
+    const stylist = req.body.stylist;
+    if (!['ezichi', 'alexia'].includes(stylist)) {
+      return res.status(400).json({ error: 'Invalid stylist' });
+    }
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file received' });
+    }
+    if (!req.file.mimetype.startsWith('image/')) {
+      return res.status(400).json({ error: 'Profile photo must be an image' });
+    }
+
+    const existing = await Setting.findOne({ key: 'profile-photos' });
+    const current = existing ? existing.value : {};
+
+    // Delete the old photo from Cloudinary first, if one exists
+    if (current[stylist] && current[stylist].publicId) {
+      try {
+        await cloudinary.uploader.destroy(current[stylist].publicId, { resource_type: 'image' });
+      } catch (e) { console.warn('Cloudinary delete failed:', e.message); }
+    }
+
+    const uploaded = await uploadToCloudinary(req.file.buffer, 'image', `crowned-beauty/${stylist}/profile`);
+    const updated = { ...current, [stylist]: { src: uploaded.secure_url, publicId: uploaded.public_id } };
+
+    await Setting.findOneAndUpdate(
+      { key: 'profile-photos' },
+      { key: 'profile-photos', value: updated },
+      { upsert: true }
+    );
+
+    res.json({ success: true, src: uploaded.secure_url });
+  } catch (err) {
+    console.error('Profile photo upload error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE /profile-photo/:stylist — remove a stylist's profile photo (admin only)
+router.delete('/profile-photo/:stylist', auth, async (req, res) => {
+  try {
+    const stylist = req.params.stylist;
+    if (!['ezichi', 'alexia'].includes(stylist)) {
+      return res.status(400).json({ error: 'Invalid stylist' });
+    }
+    const existing = await Setting.findOne({ key: 'profile-photos' });
+    const current = existing ? existing.value : {};
+
+    if (current[stylist] && current[stylist].publicId) {
+      try {
+        await cloudinary.uploader.destroy(current[stylist].publicId, { resource_type: 'image' });
+      } catch (e) { console.warn('Cloudinary delete failed:', e.message); }
+    }
+    delete current[stylist];
+
+    await Setting.findOneAndUpdate(
+      { key: 'profile-photos' },
+      { key: 'profile-photos', value: current },
+      { upsert: true }
+    );
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // POST /upload — multipart form upload (admin only)
 router.post('/upload', auth, upload.array('files', 20), async (req, res) => {
   try {

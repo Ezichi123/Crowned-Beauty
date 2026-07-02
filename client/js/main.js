@@ -14,6 +14,7 @@ async function init() {
     loadCategoryEventMap(),
     loadCalcomBase(),
     loadDepositPercent(),
+    loadProfilePhotos(),
   ]);
 
   // Render services

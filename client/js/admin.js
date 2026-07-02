@@ -54,6 +54,8 @@ function renderAdminPanel() {
   renderCatEditor();
   renderAdminGallery('ezichi');
   renderAdminGallery('alexia');
+  renderAdminProfilePhoto('ezichi');   
+  renderAdminProfilePhoto('alexia');
   populateLocationInputs(); 
   renderAddonsEditor();
   populateEventMapInputs();
@@ -143,6 +145,15 @@ h += `
   ['ezichi', 'alexia'].forEach(stylist => {
     const name = stylist === 'ezichi' ? 'EZICHI' : 'ALEXIA';
     h += `
+
+     <div class="admin-section">
+        <p class="admin-section-title">${name}'S PROFILE PHOTO</p>
+        <div id="adminProfilePhotoPrev-${stylist}" style="margin-bottom:.75rem"></div>
+        <label class="admin-upload-btn" for="up-profile-${stylist}">+ UPLOAD / REPLACE PHOTO</label>
+        <input type="file" id="up-profile-${stylist}" accept="image/*" style="display:none" onchange="uploadProfilePhoto('${stylist}', this)">
+        <p class="admin-upload-note">Shown as the circular photo in "Our Stylists" · Square images work best</p>
+      </div>
+
       <div class="admin-section">
         <p class="admin-section-title">${name}'S GALLERY</p>
         <label class="admin-upload-btn" for="up-${stylist}">+ UPLOAD IMAGES OR VIDEOS</label>
