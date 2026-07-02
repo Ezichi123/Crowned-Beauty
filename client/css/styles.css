@@ -6,6 +6,7 @@
 :root {
   --espresso: #2C1810;
   --dark-brown: #3D2314;
+  --beige: #b89374;
   --gold: #C9A96E;
   --gold-light: #E8D5A3;
   --text-light: #F5EDD8;
@@ -327,3 +328,36 @@ footer { background: var(--dark-brown); text-align: center; padding: 3rem 2rem; 
 
 .stylist-avatar.has-photo { padding: 0; overflow: hidden; }
 .stylist-avatar.has-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+/* #about .section-label, #booking .section-label, #policy .section-label,
+#about .section-title, #booking .section-title, #policy .section-title,
+#about .section-script, #booking .section-script, #policy .section-script {
+  color: var(--espresso);
+}
+
+#about .ornament, #booking .ornament, #policy .ornament {
+  color: var(--espresso);
+  opacity: .65;
+}
+#about .ornament-line::before, #about .ornament-line::after,
+#booking .ornament-line::before, #booking .ornament-line::after,
+#policy .ornament-line::before, #policy .ornament-line::after {
+  background: linear-gradient(90deg, transparent, var(--espresso), transparent);
+}
+
+#booking .booking-hint { color: rgba(44,24,16,.55); }
+#booking .booking-hint.has-selection { color: var(--espresso); }
+
+.location-detector {
+  background: var(--espresso);
+  border-color: rgba(201,169,110,.4);
+} */
+
+
+.services-intro { font-size: .87rem; color: rgba(245,237,216,.68); }
+.style-notes { font-size: .79rem; color: rgba(245,237,216,.62); }
+.booking-hint { font-size: .83rem; }
+.booking-unavail-note { font-size: .73rem; color: rgba(245,237,216,.45); }
+.rave-quote { font-size: .9rem; color: rgba(245,237,216,.8); }
+.summary-note { font-size: .83rem; }
+.location-result { font-size: .9rem; }
